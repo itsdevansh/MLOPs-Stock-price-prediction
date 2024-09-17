@@ -1,9 +1,11 @@
 requests
 pandas
 scikit-learn
-numpy
+numpy==1.26.4
 openpyxl
 matplotlib
 seaborn
 yfinance
 TA-lib
+tweepy
+python-dotenv
