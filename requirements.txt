@@ -5,3 +5,5 @@ numpy
 openpyxl
 matplotlib
 seaborn
+yfinance
+TA-lib
