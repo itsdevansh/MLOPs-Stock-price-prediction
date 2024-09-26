@@ -9,3 +9,5 @@ yfinance
 TA-lib
 tweepy
 python-dotenv
+nbformat
+plotly
