@@ -6,8 +6,8 @@ openpyxl
 matplotlib
 seaborn
 yfinance
-TA-lib
 tweepy
 python-dotenv
 nbformat
 plotly
+torch

@@ -2,3 +2,5 @@ venv
 .env
 /SEC/sec-edgar-filings
 /sp-project/
+__pycache__/
+.ipynb_checkpoints/
