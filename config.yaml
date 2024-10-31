@@ -1,0 +1,5 @@
+
+steps:
+    train_model:
+        parameters:
+            model_name: 'Long Short Term Memory'

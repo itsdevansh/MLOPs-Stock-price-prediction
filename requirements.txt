@@ -11,3 +11,4 @@ python-dotenv
 nbformat
 plotly
 torch
+"zenml[server]"
