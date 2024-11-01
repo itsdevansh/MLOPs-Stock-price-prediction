@@ -21,7 +21,7 @@ class LSTMModel(Model):
             model.add(Input(shape=(X_train.shape[1], X_train.shape[2],)))
             model.add(LSTM(units=30))
             model.add(Dense(units = 1))
-            model.compile(optimizer = 'adam', loss = 'mse', metrics=['mae'])
+            model.compile(optimizer = 'adam', loss = 'mse')
             model.fit(X_train, y_train, 20)
             logging.info("Model training completed")
             return model

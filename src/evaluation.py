@@ -1,7 +1,7 @@
 import logging
 from abc import ABC, abstractmethod
 import numpy as np
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
 
 class Evlaution(ABC):
 
@@ -9,15 +9,15 @@ class Evlaution(ABC):
     def calculate_scores(self, y_true: np.ndarray, y_pred: np.ndarray):
         pass
 
-class MSE(Evlaution):
+class MAE(Evlaution):
 
     def calculate_scores(self, y_true: np.ndarray, y_pred: np.ndarray):
         
         try: 
-            logging.info("Calculating MSE")
-            mse = mean_squared_error(y_true, y_pred)
-            logging.info(f"MSE: {mse}")
-            return mse
+            logging.info("Calculating MAE")
+            mae = mean_absolute_error(y_true, y_pred)
+            logging.info(f"MSE: {mae}")
+            return mae
         except Exception as e:
-            logging.error(f"Error in calculating MSE: {e}")
+            logging.error(f"Error in calculating MAE: {e}")
             raise e

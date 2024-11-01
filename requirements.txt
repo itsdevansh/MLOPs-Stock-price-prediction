@@ -7,8 +7,8 @@ matplotlib
 seaborn
 yfinance
 tweepy
-python-dotenv
 nbformat
 plotly
 torch
-"zenml[server]"
+keras
+zenml[server]

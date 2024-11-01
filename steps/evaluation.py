@@ -4,7 +4,7 @@ from typing import Tuple
 from typing_extensions import Annotated
 
 import numpy as np
-from src.evaluation import MSE
+from src.evaluation import MAE
 from keras.models import Sequential
 
 @step
@@ -16,10 +16,10 @@ def evaluate_model(
 
     try:
         prediction = model.predict(X_test)
-        mse_class = MSE()
-        mse = mse_class.calculate_scores(y_test, prediction)
+        mae_class = MAE()
+        mae = mae_class.calculate_scores(y_test, prediction)
 
-        return mse
+        return mae
     except Exception as e:
         logging.error(f"Error in evaluating model: {e}")
         raise e
