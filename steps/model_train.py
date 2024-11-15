@@ -1,9 +1,16 @@
 import logging
 from zenml import step
+from zenml.client import Client
 import numpy as np
 
 from src.model_dev import LSTMModel
 from keras.models import Sequential
+from zenml.model.model import Model
+import mlflow
+
+from zenml import get_step_context
+
+# experiment_tracker = Client().active_stack.experiment_tracker
 
 @step
 def train_model(
@@ -11,17 +18,12 @@ def train_model(
     X_test: np.ndarray,
     y_train: np.ndarray,
     y_test: np.ndarray,
-    model_name: str,
-) -> Sequential:
+) -> tuple[Sequential, str]:
     
     try:
-        model = None
-        if model_name == 'Long Short Term Memory':
-            model = LSTMModel()
-            trained_model = model.train(X_train, y_train)
-            return trained_model
-        else:
-            raise ValueError(f"Model {model_name} not supported")
+        model = LSTMModel()
+        trained_model, model_uri = model.train(X_train, y_train)
+        return trained_model, model_uri
     except Exception as e:
         logging.error(f"Error in training model: {e}")
         raise e

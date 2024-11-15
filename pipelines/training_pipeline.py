@@ -9,6 +9,6 @@ def train_pipeline(ticker: str):
 
     df = ingest_df(ticker)
     X_train, X_test, y_train, y_test = clean_df(df)
-
-    model = train_model(X_train, X_test, y_train, y_test)
-    mse = evaluate_model(model, X_test, y_test)
+    model, model_uri = train_model(X_train, X_test, y_train, y_test)
+    return model, model_uri
+    # mae = evaluate_model(model, X_test, y_test)

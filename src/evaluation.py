@@ -16,7 +16,7 @@ class MAE(Evlaution):
         try: 
             logging.info("Calculating MAE")
             mae = mean_absolute_error(y_true, y_pred)
-            logging.info(f"MSE: {mae}")
+            logging.info(f"MAE: {mae}")
             return mae
         except Exception as e:
             logging.error(f"Error in calculating MAE: {e}")

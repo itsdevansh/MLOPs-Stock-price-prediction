@@ -12,3 +12,4 @@ plotly
 torch
 keras
 zenml[server]
+mlflow

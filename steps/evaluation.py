@@ -1,11 +1,13 @@
 import logging
 from zenml import step
-from typing import Tuple
-from typing_extensions import Annotated
+from zenml.client import Client
+import mlflow
 
 import numpy as np
 from src.evaluation import MAE
 from keras.models import Sequential
+
+# experiment_tracker = Client().active_stack.experiment_tracker
 
 @step
 def evaluate_model(
@@ -18,6 +20,7 @@ def evaluate_model(
         prediction = model.predict(X_test)
         mae_class = MAE()
         mae = mae_class.calculate_scores(y_test, prediction)
+        mlflow.log_metric("mae", mae)
 
         return mae
     except Exception as e:
