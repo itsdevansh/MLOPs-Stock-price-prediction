@@ -27,9 +27,10 @@ from steps.model_train import train_model
 def continuous_deployment_pipeline(ticker: str = "MSFT"):
     """Run a training job and deploy an MLflow model deployment."""
     # Run the training pipeline
-    model, model_uri = train_pipeline(ticker=ticker)  # No need for is_promoted return value anymore
+    model, model_uri = train_pipeline(ticker=ticker)
+    
 
-    service = deploy_model(model, model_uri)
+    
     
 
 # @pipeline(enable_cache=False)

@@ -5,11 +5,11 @@ from keras.models import Sequential
 import mlflow.keras.save
 import tensorflow as tf
 import os
-
+from zenml.client import Client
 import mlflow
 import mlflow.keras
 
-from zenml import get_step_context
+from datetime import datetime
 
 class Model(ABC):
 
@@ -20,25 +20,38 @@ class Model(ABC):
 
 class LSTMModel(Model):
 
-    def train(self, X_train, y_train, **kwargs):
+    def train(self, X_train, y_train, ticker, action, **kwargs):
         try:
-            mlflow.keras.autolog(registered_model_name="lstm_alpha", save_exported_model=True)
+            if action == "update":
+                runs = mlflow.search_runs(
+                    experiment_ids=["0"],  # Replace with your experiment ID
+                    filter_string=f"params.dataset = '{ticker}'",
+                    order_by=["params.start_time DESC"]
+                )
+                print("RUNS: ", runs)
+                if len(runs) != 0:
+                    # Load the latest model
+                    latest_run = runs[0]
+                    model_uri = f"runs:/{latest_run.info.run_id}/model"
+                    model = mlflow.keras.load_model(model_uri)
+                    logging.info(f"Loaded model from run ID: {latest_run.info.run_id}.")
+            elif action == "train":
+                # create a new model
+                model = Sequential()
+                model.add(Input(shape=(X_train.shape[1], X_train.shape[2],)))
+                model.add(LSTM(units=30))
+                model.add(Dense(units = 1))
+                model.compile(optimizer = 'adam', loss = 'mse')
+                logging.info("New model created for training.")
+
+            mlflow.end_run()
             current_run = mlflow.start_run()
-            model = Sequential()
-            model.add(Input(shape=(X_train.shape[1], X_train.shape[2],)))
-            model.add(LSTM(units=30))
-            model.add(Dense(units = 1))
-            model.compile(optimizer = 'adam', loss = 'mse')
+            mlflow.keras.autolog(registered_model_name=f"lstm_{ticker}", save_exported_model=True)
+            mlflow.log_param("dataset", ticker)
+            mlflow.log_param("start_date", datetime.now().strftime('%Y-%m-%d'))
             model.fit(X_train, y_train, 20)
-
-            # with mlflow.start_run() as run:
-            #     print('artifact uri:', mlflow.get_artifact_uri())
-            #     mlflow.keras.save.log_model(model=model, registered_model_name="lstm_alpha", artifact_path=mlflow.get_artifact_uri().replace("file:///", ""))
-            #     run_id = run.info.run_id
-
             run_id = current_run.info.run_id
             model_uri=f"runs:/{run_id}/model"
-
             logging.info("Model training completed")
             return model, model_uri
         except Exception as e:

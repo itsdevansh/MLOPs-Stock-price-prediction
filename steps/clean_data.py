@@ -7,8 +7,8 @@ from src.data_cleaning import DataCleaning, DataDivideStrategy, DataPreprocessin
 from typing_extensions import Annotated
 from typing import Tuple
 
-@step
-def clean_df(df: pd.DataFrame) -> Tuple[
+@step(enable_cache=False)
+def clean_df(df: pd.DataFrame, ticker: str) -> Tuple[
     Annotated[np.ndarray, "X_train"],
     Annotated[np.ndarray, "X_test"],
     Annotated[np.ndarray, "y_train"],
@@ -24,10 +24,10 @@ def clean_df(df: pd.DataFrame) -> Tuple[
         processed_data = data_cleaning.handle_data()
 
         divide_strategy = DataDivideStrategy(train_split=0.7)
-        data_cleaning = DataCleaning(preprocessed_data, divide_strategy)
+        data_cleaning = DataCleaning(processed_data, divide_strategy)
         X_train, X_test, y_train, y_test = data_cleaning.handle_data()
         logging.info("Data cleaning completed")
         return X_train, X_test, y_train, y_test
     except Exception as e:
-        logging.error("Error in cleaning data: {e}")
+        logging.error(f"Error in cleaning data: {e}")
         raise e

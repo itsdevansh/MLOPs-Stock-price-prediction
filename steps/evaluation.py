@@ -2,14 +2,14 @@ import logging
 from zenml import step
 from zenml.client import Client
 import mlflow
-
+from zenml.client import Client
 import numpy as np
 from src.evaluation import MAE
 from keras.models import Sequential
 
-# experiment_tracker = Client().active_stack.experiment_tracker
+experiment_tracker = Client().active_stack.experiment_tracker.name
 
-@step
+@step(experiment_tracker=experiment_tracker)
 def evaluate_model(
     model: Sequential,
     X_test: np.ndarray,
@@ -26,5 +26,7 @@ def evaluate_model(
     except Exception as e:
         logging.error(f"Error in evaluating model: {e}")
         raise e
+    finally:
+        mlflow.end_run()
     
     
