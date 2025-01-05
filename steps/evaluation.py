@@ -5,7 +5,7 @@ import mlflow
 from zenml.client import Client
 import numpy as np
 from src.evaluation import MAE
-from keras.models import Sequential
+from tensorflow.python.keras.models import Sequential
 
 experiment_tracker = Client().active_stack.experiment_tracker.name
 

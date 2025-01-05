@@ -4,7 +4,7 @@ import mlflow
 import mlflow.keras
 from zenml.integrations.mlflow.services.mlflow_deployment import MLFlowDeploymentConfig, MLFlowDeploymentService
 import logging
-from keras.models import Sequential
+from tensorflow.python.keras.models import Sequential
 from zenml.client import Client
 
 # from zenml.services.service_type import

@@ -4,7 +4,7 @@ from zenml.client import Client
 import numpy as np
 
 from src.model_dev import LSTMModel
-from keras.models import Sequential
+from tensorflow.python.keras.models import Sequential
 import mlflow
 
 from zenml import get_step_context

@@ -12,7 +12,7 @@ class IngestData:
     def get_data(self) -> tuple[pd.DataFrame, str]:
         action = "train"
         logging.info(f"Ingesting stock data of stock {self.ticker}")
-        data_path = f"D:/Work/Projects/Stock-price-prediction/data/{self.ticker}.csv"
+        data_path = f"/Users/devanshk/Desktop/Stock-price-prediction{self.ticker}.csv"
         if not os.path.exists(data_path):
             data = pd.DataFrame(yf.download(self.ticker, period='max'))
             data.reset_index()

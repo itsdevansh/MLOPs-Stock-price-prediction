@@ -7,3 +7,4 @@ __pycache__/
 mlruns/
 .zen/
 *.ps1
+/Outdated code
